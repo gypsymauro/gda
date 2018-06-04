@@ -1,0 +1,52 @@
+{% extends "gda/base.html" %}
+
+{% block title %}
+Pratica dettaglio
+{% endblock %}
+
+{% block login %}
+
+{% if form.errors %}
+<p>L'utente o la password inseriti sono scorretti.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Non hai il permesso per visualizzare questa pagina</p>
+    {% else %}
+    <p>Inserisci utente e password per accedere</p>
+    {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+  
+  <table>
+    <tr>
+<div>
+  <td>{{ form.username.label_tag }}</td>
+  <td>{{ form.username }}</td>
+</div>
+    </tr>
+    <tr>
+<div>
+  <td>{{ form.password.label_tag }}</td>
+  <td>{{ form.password }}</td>
+</div>
+    </tr>
+</table>   
+  <div>
+    <div class="control">
+      <a class="button is-info">
+	<input type="submit" value="login" />
+      </a>
+    </div>
+
+  <input type="hidden" name="next" value="/gda" />
+</div>
+</form>
+
+
+
+
+{% endblock %}

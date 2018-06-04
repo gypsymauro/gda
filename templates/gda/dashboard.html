@@ -1,0 +1,29 @@
+{% extends "gda/base.html" %}
+
+{% block title %}
+GDA Home Page
+{% endblock %}
+
+
+{% block content %}
+
+<section class="section">
+<div class="box">
+  Avviso: saranno aggiunte a breve nuove funzionalità
+</div>
+
+Benvenuti,<br />
+da questa pagina ci si può collegare ad una serie di servizi:  
+<ul>
+  <li><a class="navbar-item" href="{% url 'protocollo_list' %}">Protocollo</a></li>
+  <li><a class="navbar-item" href="{% url 'soggetto_list' %}">Ricerca Soggetti</a></li>
+  <li><a class="navbar-item" href="{% url 'pratica_list' %}">Gestione Pratiche</a></li>
+  
+</ul>
+è possibile anche uscire cliccando sul link <a href="{% url 'logout' %}">esci</a>.
+</section>
+
+  
+
+
+{% endblock %}

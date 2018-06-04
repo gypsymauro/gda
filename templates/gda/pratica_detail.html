@@ -1,0 +1,38 @@
+{% extends "gda/base.html" %}
+
+{% block title %}
+Pratica dettaglio
+{% endblock %}
+
+{% block content %}
+
+
+
+
+<table class="table is-bordered is-striped">
+  <tr><td>Anno</td><td>{{ object.anno }}</td></tr>
+  <tr><td>Data</td><td>{{ object.datapratica }}</td></tr>
+  <tr><td>idpratca</td><td>{{ object.idpratica }}</td></tr>
+  <tr><td>codiceinterno</td><td>{{ object.codiceinterno }}</td></tr>
+  <tr><td>tipo</td><td>{{ object.tipo.descrizione }}</td></tr>
+  <tr><td>descrizione</td><td>{{ object.descrizione }}</td></tr>
+  <tr><td>note</td><td>{{ object.note }}</td></tr>
+  <tr><td>fase</td><td>{{ object.fase }}</td></tr>
+  <tr><td>fascicolo</td><td>{{ object.fascicolo }}</td></tr>
+  <tr><td>gestione</td><td>{{ object.gestione }}</td></tr>
+ </table>
+
+<hr />
+
+<table class="table">
+    <th>Protocolli Collegati</th>
+{% for protocollo in object.protocolli.all %}
+<tr>
+  <td><a href="{% url "protocollo_view" protocollo.id %}">{{ protocollo.oggetto }}</td><td> {{ protocollo.iddocumento }} </td></a>
+</tr>
+{% endfor %}
+
+</table>
+{% endblock %}
+
+

@@ -1,0 +1,29 @@
+{% extends "gda/base.html" %}
+
+{% block title %}
+Protocollo dettaglio
+{% endblock %}
+
+
+{% block content %}
+
+
+
+<table class="table is-bordered is-striped">
+  <tr><td>id documento</td><td>{{ object.iddocumento }}</td></tr>
+  <tr><td>Oggetto</td><td>{{ object.oggetto }}</td></tr>
+  <tr><td>Uffici</td><td>{% for ufficio in object.uffici.all %}{{ ufficio.descrizione }}{% endfor %}</td> 
+  <tr><td>Soggetti</td><td>{% for soggetto in object.soggetti.all %}{{ soggetto.titolo }}[ <a href="{% url 'soggetto_view' soggetto.id %}">{{ soggetto.comesichiama }} </a>]{% endfor %}</td>    
+ </table>
+<hr />
+
+<table class="table is-bordered is-striped">
+  <tr>    <th>Documenti</th> </tr>
+
+{% for document in object.DocumentList %}
+<tr><td>     <a href ="../download/{{ object.iddocumento }}/{{ document.id }}">{{ document.title }}</a></td></tr>
+{% endfor %}
+</table>
+
+
+{% endblock %}

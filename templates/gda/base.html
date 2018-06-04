@@ -1,0 +1,80 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8'">
+    <link rel="stylesheet" href="{% static 'css/bulma.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+  <title>{% block title %}{% endblock %}</title>
+
+  
+  </head>
+  <body>
+{% if request.user.is_authenticated %}
+    <section class="section">
+      <div class="container">
+
+	
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/gda">
+      <img src="{% static 'img/logo.gif' %}" alt="Gestione Dati Amministrativi" height="50" >
+    </a>
+
+    <a class="navbar-item" href="/gda">Scrivania</a>
+    <a class="navbar-item" href="{% url 'protocollo_list' %}">Protocollo</a>
+    <a class="navbar-item" href="{% url 'soggetto_list' %}">Soggetti</a>    
+    <a class="navbar-item" href="{% url 'pratica_list' %}">Pratiche</a>
+    <a class="navbar-item" href="messaggi_list">Messaggi</a>
+    <a class="navbar-item" href="detdel_list">Delibere/Determine</a>
+    <a class="navbar-item" href="{% url 'logout' %}">Esci</a>
+  </div>
+</nav>
+
+{% block content %}{% endblock %}
+
+
+{% if is_paginated %}
+
+
+<nav class="pagination is-right" role="navigation" aria-label="pagination">
+  {% if page_obj.has_previous %}
+  <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="pagination-previous"><<</a>
+  {% endif %}
+  {% if page_obj.has_next %}
+  <a href="{{ request.path }}?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="pagination-next">>></a>
+  {% endif %}
+
+  <span class="pagination-link is-current" aria-current="page"> {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</div>
+
+ </nav>
+
+{% endif %}
+
+     </div>
+</section>
+
+{% else %}
+
+
+<section>
+  <center>
+  <img src="{% static 'img/homepage.jpg' %}"  >
+
+  </center>
+
+  {% block login %}
+  <a href="{% url 'login' %}" >Login</a>
+  {% endblock %}
+  
+</section>
+{% endif %}
+
+   <div class="footer">
+      <center>DJANGO GDA, Gestione Dati Amministrativi - Comune di Riva del Garda</center>  
+    </div>
+  </body>
+
+
+</html>

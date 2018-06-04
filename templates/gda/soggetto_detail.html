@@ -1,0 +1,29 @@
+{% extends "gda/base.html" %}
+
+{% block title %}
+Soggetto dettaglio
+{% endblock %}
+
+{% block content %}
+
+
+
+
+<table class="table is-bordered is-striped">
+  <tr><td>id</td><td>{{ object.id }}</td></tr>      
+  <tr><td>Denominazione</td><td>{{ object.comesichiama }}</td></tr>
+  <tr><td>tipo</td><td>{{ object.tipo }}</td></tr>    
+  <tr><td>cf</td><td>{{ object.codicefiscale }}</td></tr>
+ </table>
+
+
+<ul>
+  <li><a class="navbar-item" href="{% url 'protocollo_list' %}?search=soggetto:{{ object.id }}">Protocolli del soggetto</a></li>
+  <li><a class="navbar-item" href="{% url 'pratica_list' %}?search=soggetto:{{ object.id }}">Pratiche del soggetto</a></li>
+</ul>
+<hr />
+
+</table>
+{% endblock %}
+
+

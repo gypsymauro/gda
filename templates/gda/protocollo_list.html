@@ -1,0 +1,48 @@
+{% extends "gda/base.html" %}
+
+{% block title %}
+Protocollo ricerca
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+<form method="get">
+
+  <div class="field has-addons">
+    <div class="control">
+      <input name="search" class="input" type="text" value="{% if request.GET.search %}{{ request.GET.search }}{% endif %}" placeholder="Ricerca protocolli">
+    </div>
+    <div class="control">
+      <a class="button is-info">
+	Cerca
+      </a>
+    </div>
+  </div>
+</form>
+</section>
+
+{% if object_list %}
+<table class="table is-bordered is-striped is-hoverable">
+<thead>
+    <tr>
+
+    <th># doc</th>
+    <th>data</th>
+    <th>Oggetto</th>    
+    </tr>
+</thead>
+<tbody>
+    {% for item in object_list %}
+    <tr>
+      <td>{{ item.iddocumento }}</td>
+      <td>{{ item.dataprotocollo | date:"d/m/Y H:i"}}</td>
+      <td><a href="{% url "protocollo_view" item.id %}">{{ item.oggetto }}</a></td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endif %}
+
+
+{% endblock %}

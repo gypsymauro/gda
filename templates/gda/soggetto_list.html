@@ -1,0 +1,48 @@
+{% extends "gda/base.html" %}
+
+{% block title %}
+Soggetto ricerca
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+<form method="get">
+
+  <div class="field has-addons">
+    <div class="control">
+      <input name="search" class="input" type="text" value="{% if request.GET.search %}{{ request.GET.search }}{% endif %}" placeholder="Ricerca pratiche">
+    </div>
+    <div class="control">
+      <a class="button is-info">
+	Cerca
+      </a>
+    </div>
+  </div>
+</form>
+</section>
+
+{% if object_list %}
+<table class="table is-bordered is-striped is-hoverable">
+<thead>
+    <tr>
+    <th>id</th>
+    <th>nome/cognome</th>
+    <th>cf</th>
+    </tr>
+</thead>
+<tbody>
+    {% for item in object_list %}
+    <tr>
+      <td>{{ item.id }}</td>
+      <td><a href="{% url "soggetto_view" item.id %}">{{ item.comesichiama }}</a></td>      
+    <td>{{ item.codicefiscale }}</td>      
+
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endif %}
+
+
+{% endblock %}
