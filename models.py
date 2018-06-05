@@ -59,6 +59,31 @@ class Ufficioprotocollo(models.Model):
         unique_together = (('protocollo', 'ufficio'),)
 
 
+class Ufficioutente(models.Model):
+    rec_creato = models.DateTimeField()
+    rec_creato_da = models.CharField(max_length=40, blank=True, null=True)
+    rec_modificato = models.DateTimeField(blank=True, null=True)
+    rec_modificato_da = models.CharField(max_length=40, blank=True, null=True)
+    id = models.BigAutoField(primary_key=True)
+    ospite = models.BooleanField()
+    riservato = models.BooleanField()
+    ricerca = models.BooleanField()
+    visualizza = models.BooleanField()
+    daiperletto = models.BooleanField()
+    inseriscepratica = models.BooleanField()
+    modificapratica = models.BooleanField()
+    consolida = models.BooleanField()
+    responsabile = models.BooleanField()
+    procedimenti = models.BooleanField()
+    leggepec = models.BooleanField()
+    ufficio = models.ForeignKey('Ufficio', models.DO_NOTHING, db_column='ufficio', blank=True, null=True)
+    utente = models.ForeignKey('Utente', models.DO_NOTHING, db_column='utente', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'ufficioutente'
+
+        
 class Soggetto(models.Model):
     rec_creato = models.DateTimeField()
     rec_creato_da = models.CharField(max_length=40, blank=True, null=True)
@@ -202,7 +227,8 @@ class Protocollo(models.Model):
 
     uffici = models.ManyToManyField(Ufficio, through='Ufficioprotocollo', related_name='uffici')
     soggetti = models.ManyToManyField(Soggetto, through='Soggettoprotocollo', through_fields=('protocollo','soggetto'), related_name='soggetti' )        
-   
+    attribuzione_uffici = models.ManyToManyField(Ufficio, through='Attribuzione', related_name='attribuzione_uffici')
+ 
     class Meta:
         managed = False
         db_table = 'protocollo'
@@ -464,7 +490,7 @@ class Attribuzione(models.Model):
     rec_modificato_da = models.CharField(max_length=40, blank=True, null=True)
     id = models.BigAutoField(primary_key=True)
     protocollo = models.ForeignKey('Protocollo', models.DO_NOTHING, db_column='protocollo', to_field='iddocumento')
-    ufficio = models.ForeignKey('Ufficio', models.DO_NOTHING, db_column='ufficio', related_name='attribuzione_uffici')
+    ufficio = models.ForeignKey('Ufficio', models.DO_NOTHING, db_column='ufficio', related_name='attruff')
     dataattribuzioneprotocollo = models.DateTimeField(blank=True, null=True)
     letto = models.BooleanField()
     dataletto = models.DateTimeField(blank=True, null=True)

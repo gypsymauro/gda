@@ -22,14 +22,17 @@ class ProtocolloList(ListView):
 
     def get_queryset(self):
         search = self.request.GET.get('search', None)
-        page = self.request.GET.get('page', None)        
+        page = self.request.GET.get('page', None)
+        username = self.request.user.username
         if not search and not page:
             return self.model.objects.none()
 
         if 'soggetto:' in search:
-            object_list = self.model.objects.filter(cognome__icontains = search)
+            search=search.replace('soggetto:','')
+            print(search)
+            object_list = self.model.objects.filter(soggetti__in = [search],  attribuzione_uffici__ufficioutente__utente__login=username)
         else:
-            object_list = self.model.objects.filter(oggetto__icontains = search).order_by('-dataprotocollo')
+            object_list = self.model.objects.filter(oggetto__icontains = search, attribuzione_uffici__ufficioutente__utente__login=username).order_by('-dataprotocollo')
         return object_list
 
 class ProtocolloView(DetailView):
@@ -94,8 +97,12 @@ class PraticaList(ListView):
         page = self.request.GET.get('page', None)                
         if not search and not page:
             return self.model.objects.none()
-       
-        object_list = self.model.objects.filter(descrizione__icontains = search).order_by('-datapratica')
+        if 'soggetto:' in search:
+            search=search.replace('soggetto:','')
+            print(search)
+            object_list = self.model.objects.filter(soggetti__in = [search])
+        else:       
+            object_list = self.model.objects.filter(descrizione__icontains = search).order_by('-datapratica')
         return object_list
 
 class PraticaView(DetailView):
@@ -105,8 +112,6 @@ class PraticaDetail(DetailView):
     model = Pratica
 
     
-
-
 class SoggettoList(ListView):
     model = Soggetto
     paginate_by = 10
@@ -116,6 +121,7 @@ class SoggettoList(ListView):
         page = self.request.GET.get('page', None)                
         if not search and not page:
             return self.model.objects.none()
+        object_list = self.model.objects.filter(cognome__icontains = search) | self.model.objects.filter(denominazione__icontains = search) | self.model.objects.filter(ragionesociale__icontains = search) | self.model.objects.filter(codicefiscale__icontains = search) | self.model.objects.filter(partitaiva__icontains = search)
         return object_list
 
 class SoggettoView(DetailView):
@@ -123,15 +129,5 @@ class SoggettoView(DetailView):
 
 class SoggettoDetail(DetailView):
     model = Soggetto
-
-    
-
-
-
-
-
-
-
-
 
     
