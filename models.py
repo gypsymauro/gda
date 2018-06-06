@@ -134,6 +134,7 @@ class Soggetto(models.Model):
     class Meta:
         managed = False
         db_table = 'soggetto'
+        ordering = ['cognome','nome','ragionesociale','denominazione']
 
     def __str__(self):
 
@@ -180,6 +181,7 @@ class Soggettoprotocollo(models.Model):
         managed = False
         db_table = 'soggettoprotocollo'
     
+
         
 class Protocollo(models.Model):
     rec_creato = models.DateTimeField()
@@ -255,6 +257,57 @@ class ProtocolloAdmin(admin.ModelAdmin):
 
 
         
+
+
+class Pratica(models.Model):
+    rec_creato = models.DateTimeField()
+    rec_creato_da = models.CharField(max_length=40, blank=True, null=True)
+    rec_modificato = models.DateTimeField(blank=True, null=True)
+    rec_modificato_da = models.CharField(max_length=40, blank=True, null=True)
+    id = models.BigAutoField(primary_key=True)
+    anno = models.IntegerField()
+    datapratica = models.DateField(blank=True, null=True)
+    idpratica = models.CharField(unique=True, max_length=9)
+    tipo = models.ForeignKey('Tipopratica', models.DO_NOTHING, db_column='tipo')
+    codiceinterno = models.CharField(unique=True, max_length=50)
+    codiceaggiuntivo = models.CharField(max_length=50, blank=True, null=True)
+    descrizione = models.CharField(max_length=1024)
+    note = models.CharField(max_length=6144, blank=True, null=True)
+    attribuzione = models.ForeignKey('Ufficio', models.DO_NOTHING, db_column='attribuzione')
+    gestione = models.ForeignKey('Ufficio', models.DO_NOTHING, db_column='gestione',related_name='ufficio_gestione')
+    ubicazione = models.ForeignKey('Ufficio', models.DO_NOTHING, db_column='ubicazione', blank=True, null=True,related_name='ufficio_ubicazione')
+    dettaglioubicazione = models.CharField(max_length=255, blank=True, null=True)
+    fase = models.ForeignKey('Fase', models.DO_NOTHING, db_column='fase', blank=True, null=True)
+    fascicolo = models.ForeignKey('Fascicolo', models.DO_NOTHING, db_column='fascicolo')
+    riservata = models.BooleanField()
+    archiviata = models.BooleanField()
+    annoinventario = models.IntegerField(blank=True, null=True)
+    numeroinventario = models.CharField(max_length=10, blank=True, null=True)
+    datachiusura = models.DateField(blank=True, null=True)
+    datatermineistruttoria = models.DateField(blank=True, null=True)
+    datascadenza = models.DateField(blank=True, null=True)
+    procedimento = models.BigIntegerField(blank=True, null=True)
+    codificaanomala = models.BooleanField()
+    multiufficio = models.BooleanField()
+
+    praticheprotocolli = models.ManyToManyField(Protocollo, through='Praticaprotocollo', related_name='praticheprotocolli')    
+
+    class Meta:
+        managed = False
+        db_table = 'pratica'
+
+
+        
+class PraticaAdmin(admin.ModelAdmin):
+    model = Pratica
+    list_display = ['id','idpratica','codiceinterno','anno','datapratica','descrizione','gestione']
+    
+    search_fields = ['codiceinterno','descrizione']
+    ordering = ['-idpratica']
+ #        exclude = ['soggetto']
+
+
+
 
 class Fascicolo(models.Model):
     rec_creato = models.DateTimeField()
@@ -401,53 +454,6 @@ class Tipopratica(models.Model):
         return self.descrizione + '[' + str(self.id) + ']'
 
         
-class Pratica(models.Model):
-    rec_creato = models.DateTimeField()
-    rec_creato_da = models.CharField(max_length=40, blank=True, null=True)
-    rec_modificato = models.DateTimeField(blank=True, null=True)
-    rec_modificato_da = models.CharField(max_length=40, blank=True, null=True)
-    id = models.BigAutoField(primary_key=True)
-    anno = models.IntegerField()
-    datapratica = models.DateField(blank=True, null=True)
-    idpratica = models.CharField(unique=True, max_length=9)
-    tipo = models.ForeignKey('Tipopratica', models.DO_NOTHING, db_column='tipo')
-    codiceinterno = models.CharField(unique=True, max_length=50)
-    codiceaggiuntivo = models.CharField(max_length=50, blank=True, null=True)
-    descrizione = models.CharField(max_length=1024)
-    note = models.CharField(max_length=6144, blank=True, null=True)
-    attribuzione = models.ForeignKey('Ufficio', models.DO_NOTHING, db_column='attribuzione')
-    gestione = models.ForeignKey('Ufficio', models.DO_NOTHING, db_column='gestione',related_name='ufficio_gestione')
-    ubicazione = models.ForeignKey('Ufficio', models.DO_NOTHING, db_column='ubicazione', blank=True, null=True,related_name='ufficio_ubicazione')
-    dettaglioubicazione = models.CharField(max_length=255, blank=True, null=True)
-    fase = models.ForeignKey('Fase', models.DO_NOTHING, db_column='fase', blank=True, null=True)
-    fascicolo = models.ForeignKey('Fascicolo', models.DO_NOTHING, db_column='fascicolo')
-    riservata = models.BooleanField()
-    archiviata = models.BooleanField()
-    annoinventario = models.IntegerField(blank=True, null=True)
-    numeroinventario = models.CharField(max_length=10, blank=True, null=True)
-    datachiusura = models.DateField(blank=True, null=True)
-    datatermineistruttoria = models.DateField(blank=True, null=True)
-    datascadenza = models.DateField(blank=True, null=True)
-    procedimento = models.BigIntegerField(blank=True, null=True)
-    codificaanomala = models.BooleanField()
-    multiufficio = models.BooleanField()
-
-    protocolli = models.ManyToManyField(Protocollo, through='Praticaprotocollo', related_name='protocolli')    
-
-    class Meta:
-        managed = False
-        db_table = 'pratica'
-
-
-        
-class PraticaAdmin(admin.ModelAdmin):
-    model = Pratica
-    list_display = ['id','idpratica','codiceinterno','anno','datapratica','descrizione','gestione']
-    
-    search_fields = ['codiceinterno','descrizione']
-    ordering = ['-idpratica']
- #        exclude = ['soggetto']
-
 
  
 

@@ -24,14 +24,15 @@ Pratica dettaglio
 
 <hr />
 
-<table class="table">
-    <th>Protocolli Collegati</th>
-{% for protocollo in object.protocolli.all %}
+<table class="table is-bordered is-striped">
+  <th>Protocolli Collegati</th>
+  <th>id</th>
+   {% for protocollo in object.praticheprotocolli.all %}
+
 <tr>
   <td><a href="{% url "protocollo_view" protocollo.id %}">{{ protocollo.oggetto }}</td><td> {{ protocollo.iddocumento }} </td></a>
 </tr>
 {% endfor %}
-
 </table>
 {% endblock %}
 

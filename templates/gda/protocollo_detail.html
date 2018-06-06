@@ -19,10 +19,18 @@ Protocollo dettaglio
 <hr />
 
 <table class="table is-bordered is-striped">
-  <tr>    <th>Documenti</th> </tr>
+<tr>    <th>Documenti</th> </tr>
 
 {% for document in object.DocumentList %}
 <tr><td>     <a href ="../download/{{ object.iddocumento }}/{{ document.id }}">{{ document.title }}</a></td></tr>
+{% endfor %}
+</table>
+
+<table class="table is-bordered is-striped">
+<tr>    <th>Pratiche Collegate</th> </tr>
+
+{% for pratica in object.praticheprotocolli.all %}
+<tr><td>     <a href="{% url 'pratica_view' pratica.id %}">{{ pratica.descrizione }}</a></td></tr>
 {% endfor %}
 </table>
 
