@@ -1,4 +1,5 @@
 {% extends "gda/base.html" %}
+{% load gdatags %}
 
 {% block title %}
 Protocollo dettaglio
@@ -11,10 +12,14 @@ Protocollo dettaglio
 
 <table class="table is-bordered is-striped">
   <tr><td>id documento</td><td>{{ object.iddocumento }}</td></tr>
+  <tr><td>Tipo</td><td>{{ object.tipo }}</td></tr>
   <tr><td>Oggetto</td><td>{{ object.oggetto }}</td></tr>
   <tr><td>Uffici</td><td><table>{% for ufficio in object.uffici.all %}<tr><td>{{ ufficio.descrizione }}{% endfor %}</tr></td></table></td> 
   <tr><td>Soggetti</td><td><table>{% for soggetto in object.soggetti.all %}<tr><td>{{ soggetto.titolo }}<a href="{% url 'soggetto_view' soggetto.id %}">{{ soggetto.comesichiama }} </a>{% endfor %}</td></tr></table></td>    
-  <tr><td>Attribuzioni</td><td><table>{% for attribuzione in object.attribuzione_uffici.all %}<tr><td>{{ attribuzione.descrizione }}{% endfor %}</td></tr></table></td> 
+  <tr><td>Attribuzioni</td><td><table>{% for attribuzione in object.attribuzione_uffici.all %}<tr><td>{{ attribuzione.descrizione }}{% endfor %}</td></tr></table></td>
+  {% if request.user|has_group:"amministratore" %}
+  <tr><td><a href="{% url "protocollo_edit" object.pk %}">Modifica</a></tr></td>
+  {% endif %}
  </table>
 <hr />
 

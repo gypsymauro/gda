@@ -9,8 +9,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name="gda/dashboard.html")),
     path('protocollo_list', views.ProtocolloList.as_view(), name='protocollo_list'),
     path('protocollo_view/<int:pk>', views.ProtocolloView.as_view(), name='protocollo_view'),
-
-
+    path('protocollo_edit/<int:pk>', views.ProtocolloUpdate.as_view(), name='protocollo_edit'),
 
     path('pratica_list', views.PraticaList.as_view(), name='pratica_list'),
     path('pratica_view/<int:pk>', views.PraticaView.as_view(), name='pratica_view'),

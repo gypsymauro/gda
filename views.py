@@ -6,9 +6,11 @@ from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, render
 
 from gda.models import *
 
+from .forms import ProtocolloForm
 from .cmis import *
 from .settings import *
 
@@ -131,3 +133,19 @@ class SoggettoDetail(DetailView):
     model = Soggetto
 
     
+class ProtocolloUpdate(UpdateView):
+    model = Protocollo
+    template_name = 'gda/protocollo_edit.html'
+    form_class = ProtocolloForm
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+#        form.send_email()
+        return super().form_valid(form)
+
+
+
+    
+    def get_success_url(self, **kwargs):         
+        return reverse_lazy('protocollo_view', args = (self.object.id,))

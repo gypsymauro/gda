@@ -1,0 +1,17 @@
+{% extends "gda/base.html" %}
+
+{% block title %}
+Protocollo modifica
+{% endblock %}
+
+
+{% block content %}
+<form method="POST" class="entratauscita-form">{% csrf_token %}
+  <table class="table is-bordered is-striped">
+        {{ form.as_table }}
+  </table>
+  <button type="submit" class="save btn btn-default">Salva</button>
+</form>
+{% endblock %}
+
+

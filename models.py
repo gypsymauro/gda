@@ -182,14 +182,20 @@ class Soggettoprotocollo(models.Model):
         db_table = 'soggettoprotocollo'
     
 
-        
+
+PROTOCOLLOTIPO_CHOICES = (
+    ('ESTERNO', 'ESTERNO'),
+    ('INTERNO', 'INTERNO'),
+    ('USCITA', 'USCITA'),
+)
+
 class Protocollo(models.Model):
     rec_creato = models.DateTimeField()
     rec_creato_da = models.CharField(max_length=40, blank=True, null=True)
     rec_modificato = models.DateTimeField(blank=True, null=True)
     rec_modificato_da = models.CharField(max_length=40, blank=True, null=True)
     id = models.BigAutoField(primary_key=True)
-    tipo = models.CharField(max_length=10)
+    tipo = models.CharField(max_length=10, choices=PROTOCOLLOTIPO_CHOICES, blank=False, null=False)
     anno = models.IntegerField()
     iddocumento = models.CharField(unique=True, max_length=12)
     dataprotocollo = models.DateTimeField()
