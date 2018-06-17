@@ -144,8 +144,5 @@ class ProtocolloUpdate(UpdateView):
 #        form.send_email()
         return super().form_valid(form)
 
-
-
-    
     def get_success_url(self, **kwargs):         
         return reverse_lazy('protocollo_view', args = (self.object.id,))

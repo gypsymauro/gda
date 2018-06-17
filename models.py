@@ -34,6 +34,7 @@ class Ufficio(models.Model):
     class Meta:
         managed = False
         db_table = 'ufficio'
+        ordering = ['denominazione']
 
     def __str__(self):
         return self.descrizione + '[' + str(self.id) + ']'
@@ -57,6 +58,8 @@ class Ufficioprotocollo(models.Model):
         managed = False
         db_table = 'ufficioprotocollo'
         unique_together = (('protocollo', 'ufficio'),)
+        ordering = ['ufficio']
+        
 
 
 class Ufficioutente(models.Model):
