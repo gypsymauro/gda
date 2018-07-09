@@ -1,5 +1,10 @@
 # tentativo di interfaccia web al GDA
 
+creare un nuovo progetto django:
+
+django-admin startproject gda
+
+clonare il progetto da github nella cartella appena creata
 
 -- promemoria
 
