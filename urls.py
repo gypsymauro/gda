@@ -1,6 +1,8 @@
 from django.urls import path
-from django.conf.urls import url
-from django.conf.urls import include
+
+
+from django.urls import re_path as urls
+from django.urls import include
 from django.views.generic import TemplateView
 
 from . import views
@@ -23,7 +25,7 @@ urlpatterns = [
 #    path('edit/<int:pk>', views.ProtocolloUpdate.as_view(), name='protocollo_edit'),
 #    path('delete/<int:pk>', views.ProtocolloDelete.as_view(), name='protocollo_delete'),
 #    path('delete/<int:pk>', views.ProtocolloDelete.as_view(), name='protocollo_delete'),    
-    url(r'^download/(\d+)/(\d+)$', views.download),
+    urls(r'^download/(\d+)/(\d+)$', views.download),
     path('accounts/', include('django.contrib.auth.urls')),
 
 ]
