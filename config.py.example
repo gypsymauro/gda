@@ -1,0 +1,11 @@
+
+alfrescoconfig = {
+'hostname': 'alfresco',
+'port':	'8080',
+'username': 'admin',
+'password': '',
+}
+
+postgresql = {
+'hostname': 'psql',
+}
