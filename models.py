@@ -29,9 +29,10 @@ class Ufficio(models.Model):
     attribuzione = models.BooleanField()
     assessorato = models.BooleanField()
     pec = models.CharField(max_length=255, blank=True, null=True)
-    richieste = models.NullBooleanField()
+    richieste = models.BooleanField(null=True)
 
     class Meta:
+        app_label = 'gda'
         managed = False
         db_table = 'ufficio'
         ordering = ['denominazione']
@@ -55,6 +56,7 @@ class Ufficioprotocollo(models.Model):
     ufficio = models.ForeignKey('Ufficio', models.DO_NOTHING, db_column='ufficio', to_field='id', blank=True, null=True)
 
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'ufficioprotocollo'
         unique_together = (('protocollo', 'ufficio'),)
@@ -83,6 +85,7 @@ class Ufficioutente(models.Model):
     utente = models.ForeignKey('Utente', models.DO_NOTHING, db_column='utente', blank=True, null=True)
 
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'ufficioutente'
 
@@ -115,7 +118,7 @@ class Soggetto(models.Model):
     numeroiscrizionealbo = models.CharField(max_length=15, blank=True, null=True)
     indicepao = models.CharField(max_length=255, blank=True, null=True)
     indicepaaoo = models.CharField(max_length=255, blank=True, null=True)
-    residente = models.NullBooleanField()
+    residente = models.BooleanField(null=True)
     codiceanagrafe = models.CharField(max_length=255, blank=True, null=True)
     tipocittadino = models.CharField(max_length=255, blank=True, null=True)
     condizionecittadino = models.CharField(max_length=255, blank=True, null=True)
@@ -135,6 +138,7 @@ class Soggetto(models.Model):
 
             
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'soggetto'
         ordering = ['cognome','nome','ragionesociale','denominazione']
@@ -181,6 +185,7 @@ class Soggettoprotocollo(models.Model):
 
 
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'soggettoprotocollo'
     
@@ -229,7 +234,7 @@ class Protocollo(models.Model):
     dataspedizione = models.DateTimeField(blank=True, null=True)
     esecutorespedizione = models.CharField(max_length=40, blank=True, null=True)
     controlloreposta = models.CharField(max_length=40, blank=True, null=True)
-    scansionemassiva = models.NullBooleanField()
+    scansionemassiva = models.BooleanField(null=True)
     fascicolo = models.ForeignKey('Fascicolo', models.DO_NOTHING, db_column='fascicolo', blank=True, null=True)
     numeroatto = models.IntegerField(blank=True, null=True)
     dataatto = models.DateField(blank=True, null=True)
@@ -241,6 +246,7 @@ class Protocollo(models.Model):
     attribuzione_uffici = models.ManyToManyField(Ufficio, through='Attribuzione', related_name='attribuzione_uffici')
  
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'protocollo'
 
@@ -302,6 +308,7 @@ class Pratica(models.Model):
     praticheprotocolli = models.ManyToManyField(Protocollo, through='Praticaprotocollo', related_name='praticheprotocolli')    
 
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'pratica'
 
@@ -333,6 +340,7 @@ class Fascicolo(models.Model):
     al = models.DateField(blank=True, null=True)
 
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'fascicolo'
 
@@ -359,6 +367,7 @@ class Titolo(models.Model):
     tipo = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'titolo'
 
@@ -371,6 +380,7 @@ class Alboprofessionale(models.Model):
     descrizione = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'alboprofessionale'
 
@@ -382,6 +392,7 @@ class Titolosoggetto(models.Model):
     descrizione = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'titolosoggetto'
 
@@ -397,7 +408,7 @@ class Utente(models.Model):
     rec_modificato = models.DateTimeField(blank=True, null=True)
     rec_modificato_da = models.CharField(max_length=40, blank=True, null=True)
     id = models.BigAutoField(primary_key=True)
-    amministratore = models.NullBooleanField()
+    amministratore = models.BooleanField(null=True)
     attributoreprotocollo = models.BooleanField()
     email = models.CharField(max_length=255, blank=True, null=True)
     login = models.CharField(max_length=40, blank=True, null=True)
@@ -422,9 +433,10 @@ class Utente(models.Model):
     nuovodocsuconsolidato = models.BooleanField()
     operatoreurp = models.BooleanField()
     supervisoreurp = models.BooleanField()
-    richieste = models.NullBooleanField()
+    richieste = models.BooleanField(null=True)
 
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'utente'
 
@@ -456,6 +468,7 @@ class Tipopratica(models.Model):
     obsoleta = models.BooleanField()
 
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'tipopratica'
         
@@ -477,6 +490,7 @@ class Oggetto(models.Model):
     associasoggettopratica = models.BooleanField()
 
     class Meta:
+        app_label = 'gda'
         managed = False
         db_table = 'oggetto'
 
@@ -494,6 +508,7 @@ class Praticaprotocollo(models.Model):
 
 
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'praticaprotocollo'
 
@@ -516,6 +531,7 @@ class Attribuzione(models.Model):
     esecutoreprincipale = models.CharField(max_length=40, blank=True, null=True)
 
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'attribuzione'
         unique_together = (('ufficio', 'protocollo'),)
@@ -532,10 +548,11 @@ class Fase(models.Model):
     id = models.BigAutoField(primary_key=True)
     descrizione = models.CharField(max_length=255)
     esclusivadaufficio = models.ForeignKey('Ufficio', models.DO_NOTHING, db_column='esclusivadaufficio', blank=True, null=True)
-    istruttoria = models.NullBooleanField()
+    istruttoria = models.BooleanField(null=True)
     evidenza = models.BooleanField()
 
     class Meta:
+        app_label = 'gda'        
         managed = False
         db_table = 'fase'
 

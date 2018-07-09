@@ -2,4 +2,6 @@ from django.apps import AppConfig
 
 
 class ProtocolloConfig(AppConfig):
-    name = 'protocollo'
+    name = 'gda'
+    verbose_name = 'GDA protocollo'
+    
