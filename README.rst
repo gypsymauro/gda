@@ -4,7 +4,17 @@ creare un nuovo progetto django:
 
 django-admin startproject gda
 
+cd gda
+mv gda gda.orig
+
 clonare il progetto da github nella cartella appena creata
+
+con git clone
+
+python3 manage.py makemigrations 
+
+python3 manage.py migrate 
+
 
 -- promemoria
 
