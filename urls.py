@@ -1,7 +1,7 @@
 from django.urls import path
 
 
-from django.urls import re_path as urls
+from django.urls import re_path
 from django.urls import include
 from django.views.generic import TemplateView
 
@@ -9,6 +9,7 @@ from . import views
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="gda/dashboard.html")),
+    path('gda', TemplateView.as_view(template_name="gda/dashboard.html")),    
     path('protocollo_list', views.ProtocolloList.as_view(), name='protocollo_list'),
     path('protocollo_view/<int:pk>', views.ProtocolloView.as_view(), name='protocollo_view'),
     path('protocollo_edit/<int:pk>', views.ProtocolloUpdate.as_view(), name='protocollo_edit'),
@@ -25,7 +26,8 @@ urlpatterns = [
 #    path('edit/<int:pk>', views.ProtocolloUpdate.as_view(), name='protocollo_edit'),
 #    path('delete/<int:pk>', views.ProtocolloDelete.as_view(), name='protocollo_delete'),
 #    path('delete/<int:pk>', views.ProtocolloDelete.as_view(), name='protocollo_delete'),    
-    urls(r'^download/(\d+)/(\d+)$', views.download),
+    re_path(r"^download/(\d+)/(\d+)$", views.download,name="download"),
+#    re_path(r'download/$', views.download,name="download"),
     path('accounts/', include('django.contrib.auth.urls')),
 
 ]

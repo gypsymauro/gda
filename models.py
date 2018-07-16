@@ -9,6 +9,7 @@ from django.db import models
 from .settings import *
 from .cmis import *
 
+GDACONFIG='/etc/gda/config.py'
 
 from django.contrib import admin
 
@@ -122,7 +123,7 @@ class Soggetto(models.Model):
     codiceanagrafe = models.CharField(max_length=255, blank=True, null=True)
     tipocittadino = models.CharField(max_length=255, blank=True, null=True)
     condizionecittadino = models.CharField(max_length=255, blank=True, null=True)
-    codicepitre = models.CharField(max_length=255, blank=True, null=True)
+#    codicepitre = models.CharField(max_length=255, blank=True, null=True)
     ragionesociale1 = models.CharField(max_length=255, blank=True, null=True)
 
     def comesichiama(self):
